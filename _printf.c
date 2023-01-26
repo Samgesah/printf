@@ -1,7 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdio.h>
 /**
  * _printf - Printf function
  * @format: format.
@@ -11,29 +8,29 @@ int _printf(const char *format, ...)
 {
 	int i = 0;
 	int count = 0;
-	int numbers = 0;
 	int (*f)(va_list);
-	va_list directives;
-	va_start(directives, format); 
+	va_list variables;
+	va_start(variables, format); 
 	/*prevent passing a null pointer*/
-	if (format == NULL )
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
+	if (format[0] == '%' && (format[1] == ' ' && !format[2]))
+                return (-1);
 	while (format[i] != '\0')
 		{
 			if (format[i] != '%')
 			{
-				numbers = write(1, &format[i], 1);
-				count = count + numbers;  
+				count += write(1, &format[i], 1);  
 				i++;
 				continue;
 			}
 			else
 			{
-				f = check_character_specification(&format[i + 1]);
+				i++;
+				f = check_specificier(&format[i]);
 				if (f != NULL)
 				{
-					numbers = f(directives);
-					count += numbers;
+					count += f(variables);
 					i++;
 					continue;
 				}
@@ -42,6 +39,6 @@ int _printf(const char *format, ...)
 					
 			}				
 		}
-	va_end(directives);
+	va_end(variables);
 	return (count);
 }

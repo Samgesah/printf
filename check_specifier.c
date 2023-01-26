@@ -1,27 +1,27 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
 /**
- * _printf - check specifier after %
- * @format: format.
+ * check_specificier - check specifier after %
+ * @fmt: char input
+ * funct_specs[] - struct array to find whether next charcter is a specifier
  * Return: pointer to a function
  */
- int (*check_character_specification(const char *format))(va_list)
+ int (*check_specificier(const char *fmt))(va_list)
  {
-	 int i;
-	 func_t function_array[] = 
+	 int i = 0;
+	 func_t funct_specs[] = 
 	 {
 		 {"c", print_char},
-		 {"s", print_str},
+		 {"s", print_string},
 		 {"%", print_percent},
+		 {"i", print_int},
+		 {"d", print_int},
 		 {NULL, NULL}
-		 };
-	for (i = 0; function_array[i].t != NULL; i++)
+	 };
+	for (i = 0; funct_specs[i].t != NULL; i++)
 		{
-			if (*(function_array[i].t) == *format)
+			if (*(funct_specs[i].t) == *fmt)
 			{
-				return (function_array[i].f);
+				return (funct_specs[i].s);
 			}
 			
 		}
