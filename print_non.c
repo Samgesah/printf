@@ -46,8 +46,9 @@ int print_bigS(va_list variables, flags_t *f)
 int print_rev(va_list variables, flags_t *f)
 {
 	int i = 0, j;
+	char *s;
 	(void)f;
-	char *s = va_arg(variables, char *);
+	s = va_arg(variables, char *);
 	if (!s)
 		s = "(null)";
 
