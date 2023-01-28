@@ -52,9 +52,10 @@ int print_hex_big(va_list variables, flags_t *f)
  */
 int print_binary(va_list variables, flags_t *f)
 {
+	char *str;
 	unsigned int num = va_arg(variables, unsigned int);
 	(void)f;
-	char *str = convert(num, 2, 0);
+	str = convert(num, 2, 0);
 	return (_puts(str));
 }
 
