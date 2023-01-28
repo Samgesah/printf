@@ -1,81 +1,4 @@
-#ifndef MAIN_H
-#define MAIN_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h>
-
-/**
- * struct flags - struct containing flags to turn on
- * when a flag specifier is passed to _printf()
- * @plus: flag for the '+' char
- * @space: flag for the ' ' char
- * @hash: flag for the '#' char
- */
-typedef struct flags
-{
-	int plus;
-	int space;
-	int hash;
-} flags_t;
-
-/**
-*struct func - specifier struct
-*@t: character to compare
-*f - handle printing
-*/
-typedef struct func
-{
-        char t;
-        int (*s)(va_list ap, flags_t *f);
-} func_t;
-
-/* print_nums */
-int print_int(va_list variables, flags_t *f);
-int print_unsigned(va_list variables, flags_t *f);
-void print_number(int n);
-int count_digit(int i);
-
-/* print_bases */
-int print_hex(va_list variables, flags_t *f);
-int print_hex_big(va_list variables, flags_t *f);
-int print_binary(va_list variables, flags_t *f);
-int print_octal(va_list variables, flags_t *f);
-
-/* converter */
-char *convert(unsigned long int num, int base, int lowercase);
-
-/* _printf */
-int _printf(const char *format, ...);
-
-/* check_specifier */
- int (*check_specifier(char s))(va_list,  flags_t *);
-
-/* check_flag */
-int check_flag(char c, flags_t *f);
-
-/* print_alpha */
-int print_string(va_list variables, flags_t *f);
-int print_char(va_list variables, flags_t *f);
-
-/* write_funcs */
-int _putchar(char c);
-int _puts(char *str);
-
-/* print_custom */
-int print_bigS(va_list variables, flags_t *f);
-int print_rev(va_list variables, flags_t *f);
-int print_rot13(va_list variables, flags_t *f);
-
-/* print_address */
-int print_address(va_list variables, flags_t *f);
-
-/* print_percent */
-int print_percent(va_list variables,  flags_t *f);
-
-
-#endif
+#include 'main.h'
 /**
  * _printf - Printf function
  * @format: format.
@@ -153,3 +76,168 @@ int _printf(const char *format, ...)
 		return (myarray[i].s);
 	return (NULL);
 }
+/**
+ * print_string - loops through a string and prints
+ * every character
+ * @l: va_list arguments from _printf
+ * Return: number of char printed
+ */
+int print_string(va_list variables, flags_t *f)
+{
+	char *s = va_arg(variables, char *);
+	(void)f;
+	if (!s)
+		s = "(null)";
+	return (_puts(s));
+}
+
+/**
+ * print_char - prints a character
+ * @l: va_list arguments from _printf
+ * Return: number of char printed
+ *
+ *
+ */ 
+int print_char(va_list variables, flags_t *f)
+{
+	(void)f;
+	_putchar(va_arg(variables, int));
+	return (1);
+}
+/**
+ * print_int - prints an integer
+ * @variables: va_list of arguments from _printf
+ * @f: pointer to the struct flags determining
+ * if a flag is passed to _printf
+ * Return: number of char printed
+ */
+int print_int(va_list variables, flags_t *f)
+{
+	int n = va_arg(variables, int);
+	int res = count_digit(n);
+
+	if (f->space == 1 && f->plus == 0 && n >= 0)
+		res += _putchar(' ');
+	if (f->plus == 1 && n >= 0)
+		res += _putchar('+');
+	if (n <= 0)
+		res++;
+	print_number(n);
+	return (res);
+}
+
+/**
+ * print_unsigned - prints an unsigned integer
+ * @variables: va_list of arguments from _printf
+ * @f: pointer to the struct flags determining
+ * if a flag is passed to _printf
+ * Return: number of char printed
+ */
+int print_unsigned(va_list variables, flags_t *f)
+{
+	unsigned int u = va_arg(variables, unsigned int);
+	char *str = convert(u, 10, 0);
+
+	(void)f;
+	return (_puts(str));
+}
+
+/**
+ * print_number - helper function that loops through
+ * an integer and prints all its digits
+ * @n: integer to be printed
+ */
+void print_number(int n)
+{
+	unsigned int n1;
+
+	if (n < 0)
+	{
+		_putchar('-');
+		n1 = -n;
+	}
+	else
+		n1 = n;
+
+	if (n1 / 10)
+		print_number(n1 / 10);
+	_putchar((n1 % 10) + '0');
+}
+
+/**
+ * count_digit - returns the number of digits in an integer
+ * for _printf
+ * @i: integer to evaluate
+ * Return: number of digits
+ */
+int count_digit(int i)
+{
+	unsigned int d = 0;
+	unsigned int u;
+
+	if (i < 0)
+		u = i * -1;
+	else
+		u = i;
+	while (u != 0)
+	{
+		u /= 10;
+		d++;
+	}
+	return (d);
+}
+
+/**
+ * print_percent - prints a percent
+ * @variables: va_list arguments from _printf
+ * Return: number of char printed
+ */
+int print_percent(va_list variables,  flags_t *f)
+{
+	(void)f;
+	(void)variables;
+	return (_putchar('%'));
+}
+**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ * Description: _putchar uses a local buffer of 1024 to call write
+ * as little as possible
+ */
+
+int _putchar(char c)
+  
+{
+  
+  static char buf[1024];
+  
+  static int i;
+  
+
+  
+  if (c == -1 || i >= 1024)
+    
+    {
+      
+      write(1, &buf, i);
+      
+      i = 0;
+      
+    }
+  
+  if (c != -1)
+    
+    {
+      
+      buf[i] = c;
+      
+      i++;
+      
+    }
+  
+  return (1);
+  
+}
+
