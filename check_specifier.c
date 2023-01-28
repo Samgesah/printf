@@ -31,6 +31,6 @@
 		int vars = 14;
 		for (i = 0; i < vars; i++)
 		if (myarray[i].t == s)
-			return (myarray[i].s);
+		return (myarray[i].s);
 	return (NULL);
 }
