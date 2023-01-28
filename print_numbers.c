@@ -1,30 +1,40 @@
 #include "main.h"
+
 /**
  * print_int - prints an integer
- * @l: va_list of arguments from _printf
+ * @variables: va_list of arguments from _printf
  * @f: pointer to the struct flags determining
  * if a flag is passed to _printf
  * Return: number of char printed
  */
-int print_int(va_list variables)
+int print_int(va_list variables, flags_t *f)
 {
 	int n = va_arg(variables, int);
 	int res = count_digit(n);
+
+	if (f->space == 1 && f->plus == 0 && n >= 0)
+		res += _putchar(' ');
+	if (f->plus == 1 && n >= 0)
+		res += _putchar('+');
+	if (n <= 0)
+		res++;
 	print_number(n);
 	return (res);
 }
 
 /**
  * print_unsigned - prints an unsigned integer
- * @l: va_list of arguments from _printf
+ * @variables: va_list of arguments from _printf
  * @f: pointer to the struct flags determining
  * if a flag is passed to _printf
  * Return: number of char printed
  */
-int print_unsigned(va_list variables)
+int print_unsigned(va_list variables, flags_t *f)
 {
 	unsigned int u = va_arg(variables, unsigned int);
 	char *str = convert(u, 10, 0);
+
+	(void)f;
 	return (_puts(str));
 }
 
@@ -35,19 +45,19 @@ int print_unsigned(va_list variables)
  */
 void print_number(int n)
 {
-	unsigned int num;
+	unsigned int n1;
 
 	if (n < 0)
 	{
 		_putchar('-');
-		num = -n;
+		n1 = -n;
 	}
 	else
-		num = n;
+		n1 = n;
 
-	if (num / 10)
-		print_number(num / 10);
-	_putchar((num % 10) + '0');
+	if (n1 / 10)
+		print_number(n1 / 10);
+	_putchar((n1 % 10) + '0');
 }
 
 /**
@@ -58,7 +68,7 @@ void print_number(int n)
  */
 int count_digit(int i)
 {
-	unsigned int k = 0;
+	unsigned int d = 0;
 	unsigned int u;
 
 	if (i < 0)
@@ -68,28 +78,19 @@ int count_digit(int i)
 	while (u != 0)
 	{
 		u /= 10;
-		k++;
+		d++;
 	}
-	return (k);
+	return (d);
 }
 
 /**
- * print_percent - Printf a %  to stdout
- * @directives: variadic parameter
- * Return: number of characters printed
+ * print_percent - prints a percent
+ * @variables: va_list arguments from _printf
+ * Return: number of char printed
  */
-int print_percent (va_list variables)
+int print_percent(va_list variables,  flags_t *f)
 {
-char c;
-int count;
-(void) variables;
- c = '%';
- count = 0;
- if (c)
- {
- count = write(1, &c, 1);
- return (count);
- }
- return (0);
+	(void)f;
+	(void)variables;
+	return (_putchar('%'));
 }
-
