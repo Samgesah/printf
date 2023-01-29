@@ -1,8 +1,8 @@
 #include "main.h"
 /**
  * print_string - loops through a string and prints
- * every character
- * @l: va_list arguments from _printf
+ *@variables: variable
+ * @f: va_list arguments from _printf
  * Return: number of char printed
  */
 int print_string(va_list variables, flags_t *f)
@@ -13,14 +13,12 @@ int print_string(va_list variables, flags_t *f)
 		s = "(null)";
 	return (_puts(s));
 }
-
 /**
  * print_char - prints a character
- * @l: va_list arguments from _printf
+ * @f: va_list arguments from _printf
+ *@variables: variable
  * Return: number of char printed
- *
- *
- */ 
+ */
 int print_char(va_list variables, flags_t *f)
 {
 	(void)f;
