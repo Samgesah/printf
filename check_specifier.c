@@ -11,9 +11,10 @@
  int (*check_specifier(char s))(va_list, flags_t *)
  {
 	 int i;
+
 	 func_t myarray[] = 
 	 {
-		 {'i', print_int},
+		{'i', print_int},
 		{'s', print_string},
 		{'c', print_char},
 		{'d', print_int},
@@ -27,9 +28,10 @@
 		{'S', print_bigS},
 		{'p', print_address},
 		{'%', print_percent}
-		};
-		int vars = 14;
-		for (i = 0; i < vars; i++)
+	};
+
+	int vars = 14;
+	for (i = 0; i < vars; i++)
 		if (myarray[i].t == s)
 		return (myarray[i].s);
 	return (NULL);
