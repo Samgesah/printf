@@ -23,12 +23,13 @@ typedef struct flags
 /**
 *struct func - specifier struct
 *@t: character to compare
+*@s: function
 *f - handle printing
 */
 typedef struct func
 {
-        char t;
-        int (*s)(va_list ap, flags_t *f);
+	char t;
+	int (*s)(va_list ap, flags_t *f);
 } func_t;
 
 /* print_nums */
@@ -50,7 +51,7 @@ char *convert(unsigned long int num, int base, int lowercase);
 int _printf(const char *format, ...);
 
 /* check_specifier */
- int (*check_specifier(char s))(va_list,  flags_t *);
+int (*check_specifier(char s))(va_list,  flags_t *);
 
 /* check_flag */
 int check_flag(char c, flags_t *f);
