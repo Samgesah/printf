@@ -54,6 +54,7 @@ int _print_format(const char *format, va_list args)
   *
   * Return: The length of the specifier
   */
+
 int _print_spec(char format, va_list args)
 {
 	int i  = 0, length = 0;
@@ -85,6 +86,7 @@ int _print_spec(char format, va_list args)
   *
   * Return: The current count after prints invalid specifiers
   */
+
 int _print_invalid_spec(char prev_format, char format, int count)
 {
 	count += _write('%');
@@ -108,6 +110,7 @@ int _print_invalid_spec(char prev_format, char format, int count)
   *
   * Return: 1 if char is equal to a type
   */
+
 int _validate_char(char _type)
 {
 	char _types[] = {'c', 's', 'd', 'i', 'b', '%'};
