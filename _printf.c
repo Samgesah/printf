@@ -11,6 +11,7 @@ int _printf(const char *format, ...)
 	int (*f)(va_list,  flags_t *);
 	va_list variables;
 	const char *L;
+
 	va_start(variables, format);
 	/*prevent passing a null pointer*/
 	if (!format || (format[0] == '%' && !format[1]))
