@@ -8,12 +8,11 @@
  * printing function
  * Return: a pointer to the matching printing function
  */
- int (*check_specifier(char s))(va_list, flags_t *)
- {
+int (*check_specifier(char s))(va_list, flags_t *)
+{
 	 int i;
 
-	 func_t myarray[] = 
-	 {
+	 func_t myarray[] = {
 		{'i', print_int},
 		{'s', print_string},
 		{'c', print_char},
@@ -31,6 +30,7 @@
 	};
 
 	int vars = 14;
+
 	for (i = 0; i < vars; i++)
 		if (myarray[i].t == s)
 		return (myarray[i].s);
